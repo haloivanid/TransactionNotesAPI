@@ -5,6 +5,9 @@ const db = require('../../controller/dbController')
 const path = require('path')
 const dirName = path.resolve(__dirname).split('/').pop()
 
+const authorization = require('../../middleware/authorization')
+app.use(authorization)
+
 app.delete(`/${dirName}`, (req, res) => {
     if (req.query.id) {
         const result = db.remove(`${dirName}`, req.query.id)

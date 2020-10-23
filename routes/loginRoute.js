@@ -1,18 +1,23 @@
 const express = require('express')
 const app = express.Router()
-const hyperid = require('hyperid')
+const jwt = require('jsonwebtoken')
 const db = require('../controller/dbController')
 
 app.post('/login', (req, res) => {
-    if (req.body) {
-        const instance = hyperid()
-        const result = db.get('users', req.body)
-        if (result) {
-            result.token = instance()
-            res.status(200).send(result)
+    const body = req.body
+    if (body) {
+        if (body.password) {
+            const result = db.get('users', body)
+            if (result) {
+                const token = jwt.sign(result, 'my_secret')
+                res.status(200).send(token)
+            }
+            else {
+                res.sendStatus(401)
+            }
         }
         else {
-            res.sendStatus(401)
+            res.status(401).send('password must inserted')
         }
     }
 })
