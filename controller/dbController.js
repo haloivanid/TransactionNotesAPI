@@ -88,9 +88,10 @@ function add(tableName, body) {
     if (!bodyValidator) {
         return false
     }
-    return db.get(tableName)
+    db.get(tableName)
         .push(bodyValidator)
         .write()
+    return bodyValidator
 }
 
 /**
@@ -110,10 +111,11 @@ function edit(tableName, id, body) {
     if (!bodyValidator) {
         return false
     }
-    return db.get(tableName)
+    db.get(tableName)
         .find({ id })
         .assign(bodyValidator)
         .write()
+    return bodyValidator
 }
 
 /**

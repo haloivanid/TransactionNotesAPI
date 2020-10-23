@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express.Router()
 const hyperid = require('hyperid')
-const db = require('../../controller/dbController')
+const db = require('../controller/dbController')
 
 app.post('/login', (req, res) => {
     if (req.body) {
@@ -12,7 +12,7 @@ app.post('/login', (req, res) => {
             res.status(200).send(result)
         }
         else {
-            res.sendStatus(400)
+            res.sendStatus(401)
         }
     }
 })
